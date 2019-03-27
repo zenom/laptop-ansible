@@ -3,7 +3,12 @@
   - 127.0.0.1
   connection: local
   become: true
+  become_user: '{{username}}'
   tasks:
   - name: Install base items
     apt:
       name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh']
+  - name: change user shell to zsh
+      become: yes
+      become_user: root
+      command: chsh -s /bin/zsh "{{ username }}"

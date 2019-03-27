@@ -1,9 +1,8 @@
 - hosts: 
-  - disciple
   - localhost
   - 127.0.0.1
   connection: local
   become: true
   tasks:
-  - name: Print out hostname
-    command: hostname
+  - name: Install VIM
+    apt: name=vim

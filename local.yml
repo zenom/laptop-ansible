@@ -14,3 +14,7 @@
     git:
       repo: 'https://github.com/rbenv/rbenv.git'
       dest: '/home/andy/.rbenv'
+  - name: install ruby-build
+    git:
+      repo: https://github.com/rbenv/ruby-build.git
+      dest: "$(rbenv root)plugins/ruby-build"

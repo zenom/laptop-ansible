@@ -10,6 +10,7 @@
   - name: change user shell to zsh
     become: true
     command: chsh -s /bin/zsh 'andy'
-  - name: install rbenv
+  - git:
+    name: install rbenv
     repo: 'git@github.com:rbenv/rbenv.git'
     dest: '/home/andy/.rbenv'

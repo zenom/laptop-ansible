@@ -4,14 +4,6 @@
   connection: local
   become: true
   tasks:
-  - name: Install VIM
-    apt: name={{item}}
-    with_items:
-      - vim
-      - tmux
-      - build-essential
-      - ctags
-      - imagemagick
-      - libmysqlclient-dev
-      - cmake
-      - zsh
+  - name: Install base items
+    apt:
+      name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh']

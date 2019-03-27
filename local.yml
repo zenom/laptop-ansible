@@ -2,5 +2,5 @@
   connection: local
   become: true
   tasks:
-  - name: Install htop
-    apt: name=htop
+  - name: Print out hostname
+    command: hostname

@@ -1,8 +1,17 @@
-- hosts: 
+- hosts:
   - localhost
   - 127.0.0.1
   connection: local
   become: true
   tasks:
   - name: Install VIM
-    apt: name=vim
+    apt: name={{item}}
+    with_items:
+      - vim
+      - tmux
+      - build-essential
+      - ctags
+      - imagemagick
+      - libmysqlclient-dev
+      - cmake
+      - zsh

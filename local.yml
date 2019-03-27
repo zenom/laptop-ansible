@@ -12,5 +12,5 @@
     command: chsh -s /bin/zsh 'andy'
   - name: install rbenv
     git:
-      repo: 'git@github.com:rbenv/rbenv.git'
+      repo: 'https://github.com/rbenv/rbenv.git'
       dest: '/home/andy/.rbenv'

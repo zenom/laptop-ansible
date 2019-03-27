@@ -9,5 +9,4 @@
       name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh']
   - name: change user shell to zsh
     become: true
-    become_user: andy
-    command: chsh -s /bin/zsh
+    command: chsh -s /bin/zsh 'andy'

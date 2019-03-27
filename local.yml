@@ -9,6 +9,6 @@
     apt:
       name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh']
   - name: change user shell to zsh
-      become: true
-      become_user: root
-      command: chsh -s /bin/zsh "{{ username }}"
+    become: true
+    become_user: root
+    command: chsh -s /bin/zsh "{{ username }}"

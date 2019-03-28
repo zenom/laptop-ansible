@@ -1,15 +1,17 @@
-# sudo ansible-playbook -K local.yml -e "user=andy"
+# sudo ansible-playbook -K local.yml
 - hosts:
   - localhost
   - 127.0.0.1
   vars:
     local_user: "andy"
+    rbenv_path: "/home/{{local_user}}/.rbenv/bin/rbenv"
+    ruby_version: "2.5.3"
   connection: local
   tasks:
   - name: Install base items
     become: true
     apt:
-      name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh', 'docker', 'docker-compose']
+      name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh', 'docker', 'docker-compose', 'libreadline-dev', 'libssl-dev', 's3cmd']
   - name: change user shell to zsh
     become: true
     command: chsh -s /bin/zsh "{{local_user}}"
@@ -25,16 +27,27 @@
     git:
       repo: https://github.com/rbenv/ruby-build.git
       dest: "~/.rbenv/plugins/ruby-build"
-  - name: download kitematic
-    become: true
-    become_user: "{{local_user}}"
-    unarchive:
-      src: "https://github.com/docker/kitematic/releases/download/v0.17.7/Kitematic-0.17.7-Ubuntu.zip"
-      dest: "~/Downloads"
-      remote_src: yes
-    register: kitematic_downloaded
-  - name: install kitematic
-    become: true
-    when: kitematic_downloaded is success
-    apt:
-      deb: "~/Downloads/Kitematic-0.17.7_amd64.deb"
+  # - name: download kitematic
+  #   become: true
+  #   become_user: "{{local_user}}"
+  #   unarchive:
+  #     src: "https://github.com/docker/kitematic/releases/download/v0.17.7/Kitematic-0.17.7-Ubuntu.zip"
+  #     dest: "~/Downloads"
+  #     remote_src: yes
+  #   register: kitematic_downloaded
+  # - name: install kitematic
+  #   become: true
+  #   when: kitematic_downloaded is success
+  #   apt:
+  #     deb: "~/Downloads/Kitematic-0.17.7_amd64.deb"
+  - name: ruby 2.5.3 check
+    # become: true
+    # become_user: "{{local_user}}"
+    register: ruby_2_5_3_installed
+    shell: "{{rbenv_path}} versions | grep {{ ruby_version }}"
+    ignore_errors: yes
+  - name: install ruby 2.5.3
+    # become: true
+    # become_user: "{{local_user}}"
+    shell: "{{rbenv_path}} install {{ ruby_version }}"
+    when: ruby_2_5_3_installed is failure

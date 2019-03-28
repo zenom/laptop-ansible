@@ -11,7 +11,7 @@
   - name: Install base items
     become: true
     apt:
-      name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh', 'docker', 'docker-compose', 'libreadline-dev', 'libssl-dev', 's3cmd']
+      name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh', 'docker-compose', 'libreadline-dev', 'libssl-dev', 's3cmd', 'silversearcher-ag', 'libicu-dev']
   - name: change user shell to zsh
     become: true
     command: chsh -s /bin/zsh "{{local_user}}"

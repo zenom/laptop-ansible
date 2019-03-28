@@ -1,0 +1,4 @@
+- Docker install instructions
+ - https://docs.docker.com/install/linux/docker-ce/ubuntu/
+ - If you are running disco, make sure to set to bionic
+ -  sudo usermod -aG docker $USER

@@ -1,20 +1,40 @@
+# sudo ansible-playbook -K local.yml -e "user=andy"
 - hosts:
   - localhost
   - 127.0.0.1
+  vars:
+    local_user: "andy"
   connection: local
-  become: true
   tasks:
   - name: Install base items
+    become: true
     apt:
-      name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh']
+      name: ['vim', 'tmux', 'build-essential', 'ctags', 'imagemagick', 'libmysqlclient-dev', 'cmake', 'zsh', 'docker', 'docker-compose']
   - name: change user shell to zsh
     become: true
-    command: chsh -s /bin/zsh 'andy'
+    command: chsh -s /bin/zsh "{{local_user}}"
   - name: install rbenv
+    become: true
+    become_user: "{{local_user}}"
     git:
       repo: 'https://github.com/rbenv/rbenv.git'
-      dest: '/home/andy/.rbenv'
+      dest: '~/.rbenv'
   - name: install ruby-build
+    become: true
+    become_user: "{{local_user}}"
     git:
       repo: https://github.com/rbenv/ruby-build.git
-      dest: "/home/andy/.rbenv/plugins/ruby-build"
+      dest: "~/.rbenv/plugins/ruby-build"
+  - name: download kitematic
+    become: true
+    become_user: "{{local_user}}"
+    unarchive:
+      src: "https://github.com/docker/kitematic/releases/download/v0.17.7/Kitematic-0.17.7-Ubuntu.zip"
+      dest: "~/Downloads"
+      remote_src: yes
+    register: kitematic_downloaded
+  - name: install kitematic
+    become: true
+    when: kitematic_downloaded is success
+    apt:
+      deb: "~/Downloads/Kitematic-0.17.7_amd64.deb"
